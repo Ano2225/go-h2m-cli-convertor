@@ -1,45 +1,87 @@
 package main
 
 import (
-    "flag"
-    "fmt"
-    "log"
-   // "os"
+	"bufio"
+	//"flag"
+	"fmt"
+	"log"
+	"os"
+	"strings"
 
-    "github.com/tonuser/markdown-to-html/internal/converter"
-    "github.com/tonuser/markdown-to-html/internal/utils"
+	// "os"
+
+	"github.com/tonuser/markdown-to-html/internal/converter"
+	"github.com/tonuser/markdown-to-html/internal/utils"
+)
+
+const (
+    mdToHtml = "1"
+    htmlToMd = "2"
 )
 
 func main() {
-    // Définition des arguments en ligne de commande
-    inputFile := flag.String("input", "", "Chemin du fichier Markdown à convertir")
-    outputFile := flag.String("output", "", "Chemin du fichier HTML généré")
-    flag.Parse()
+    //Affichage du menu
+    fmt.Println("=== Convertisseur de fichier ===")
+    fmt.Println("1. Markdown vers HTML")
+    fmt.Println("2. HTML vers Markdown")
+    fmt.Println("Choisissez une option (1-2):")
 
-    // Vérification si un fichier Markdown a été fourni
-    if *inputFile == "" {
-        log.Fatal("Erreur : Veuillez fournir un fichier Markdown avec --input")
+    reader := bufio.NewReader(os.Stdin)
+    choice, _ := reader.ReadString('\n')
+    choice = strings.TrimSpace(choice)
+
+    switch (choice) {
+    case mdToHtml:
+        MarkdownToHTML()
+    case htmlToMd:
+        HtmlToMd()
+    default:
+        log.Fatal("Option invalide")
+    }
+
+}
+
+
+func MarkdownToHTML() {
+    var inputFile, outputFile string
+
+    //Demande du fichier d'entrée
+    fmt.Println("Entrez le chemin du fichier Markdown")
+    fmt.Scanln(&inputFile)
+
+    if inputFile == "" {
+        log.Fatal("Erreur: Aucun fichier markdown fourni")
     }
 
     // Lecture du fichier Markdown
-    markdown, err := utils.ReadFile(*inputFile)
+    markdown, err := utils.ReadFile(inputFile)
     if err != nil {
-        log.Fatalf("Erreur de lecture du fichier : %v", err)
+        log.Fatalf("Erreur de lecture du fichier MarkDown : %v", err)
     }
 
     // Conversion en HTML
     html, err := converter.ConvertMarkdownToHTML(markdown)
     if err != nil {
-        log.Fatalf("Erreur de conversion : %v", err)
+        log.Fatalf("Erreur de conversion du fichier HTML : %v", err)
     }
 
-    // Écriture dans le fichier HTML ou affichage en console
-    if *outputFile != "" {
-        if err := utils.WriteFile(*outputFile, []byte(html)); err != nil {
-            log.Fatalf("Erreur d'écriture du fichier : %v", err)
+    //Demande du fichier de sortie
+    fmt.Println("Entrez le chemin du fichier HTML (ou laisser vide pour afficher dans la console)")
+    fmt.Scanln(&outputFile)
+
+    if outputFile != "" {
+        if err := utils.WriteFile(outputFile, []byte(html)); err != nil {
+            log.Fatalf("Erreur d'écriture du fichier HTML : %v", err)
         }
-        fmt.Printf("Conversion réussie ! HTML enregistré dans %s\n", *outputFile)
+        fmt.Printf("Conversion réussie ! HTML enregistré dans %s\n", outputFile)
     } else {
+        fmt.Println("\n Resultat de la conversion :")
+        fmt.Println("-------------------------------")
         fmt.Println(html)
     }
+}
+
+func HtmlToMd(){
+    //Fonction a implementer
+    fmt.Println("convertir html to markdown")
 }
