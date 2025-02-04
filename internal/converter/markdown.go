@@ -3,7 +3,6 @@ package converter
 import (
 	"bytes"
 	"strings"
-
 	//"github.com/jaytaylor/html2text"
 	"github.com/yuin/goldmark"
     "github.com/JohannesKaufmann/html-to-markdown"
