@@ -81,7 +81,42 @@ func MarkdownToHTML() {
     }
 }
 
-func HtmlToMd(){
-    //Fonction a implementer
-    fmt.Println("convertir html to markdown")
+func HtmlToMd() {
+    var inputFile, outputFile string
+
+    //Demande du fichier d'entrée HTML
+    fmt.Println("Entrez le chemin du fichier HTML")
+    fmt.Scanln(&inputFile)
+
+    if inputFile == "" {
+        log.Fatal("Erreur: Aucun fichier HTML fourni")
+    }
+
+    //Lecture du fichier
+    htmlContent, err := utils.ReadFile(inputFile)
+    if err != nil {
+        log.Fatalf("Erreur de lecture du fichier HTML: %v", err)
+    }
+
+    //Conversion en Markdown
+    markdown, err := converter.ConvertHTMLtoMarkdown(string(htmlContent))
+    if err != nil {
+        log.Fatalf("Erreur de conversion du fichier HTML : %v", err)
+    }
+
+    //Demande du fichier de sortie
+    fmt.Println("Entrez le chemin du fichier Markdown (ou laisser vide pour afficher dans la console)")
+    fmt.Scanln(&outputFile)
+
+    if outputFile != "" {
+        if err := utils.WriteFile(outputFile, []byte(markdown)); err != nil {
+            log.Fatalf("Erreur d'ecriture du fichier Markdown: %v", err)
+        }
+        fmt.Printf("Conversion réussie ! Markdown enregistré dans %s\n", outputFile)
+    } else {
+        fmt.Println("\nRésultat de la conversion :")
+        fmt.Println("------------------------------")
+        fmt.Println(markdown)
+    }
+
 }
