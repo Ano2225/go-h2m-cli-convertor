@@ -4,7 +4,6 @@ import (
     "fmt"
     "log"
     "path/filepath"
-   // "strings"
     "time"
 
     "github.com/briandowns/spinner"
@@ -13,68 +12,68 @@ import (
     "github.com/tonuser/markdown-to-html/internal/utils"
 )
 
-// Commande md2html
+// md2html Command
 var mdToHtmlCmd = &cobra.Command{
     Use:     "md2html",
     Aliases: []string{"markdown-to-html"},
-    Short:   "Convertir Markdown en HTML",
-    Long:    "Convertir un fichier Markdown en HTML",
+    Short:   "Convert Markdown to HTML",
+    Long:    "Convert a Markdown file to HTML",
     RunE: func(cmd *cobra.Command, args []string) error {
         inputFile, _ := cmd.Flags().GetString("input")
         outputFile, _ := cmd.Flags().GetString("output")
 
         if inputFile == "" {
-            fmt.Println("Entrez le chemin du fichier Markdown")
+            fmt.Println("Enter the path to the Markdown file:")
             fmt.Scanln(&inputFile)
         }
         if inputFile == "" {
-            log.Fatal("Erreur: Aucun fichier Markdown fourni")
+            log.Fatal("Error: No Markdown file provided")
         }
 
-        // Vérifier l'extension du fichier
+        // Check file extension
         if filepath.Ext(inputFile) != ".md" {
-            log.Fatal("Erreur: Le fichier d'entrée doit avoir l'extension .md")
+            log.Fatal("Error: Input file must have a .md extension")
         }
 
-        // Démarrage du loader
+        // Start the loading spinner
         s := spinner.New(spinner.CharSets[14], 100*time.Millisecond)
         s.Start()
-        s.Suffix = " Conversion en cours..."
+        s.Suffix = " Converting..."
 
-        // Lire le fichier Markdown
+        // Read the Markdown file
         markdown, err := utils.ReadFile(inputFile)
         if err != nil {
             s.Stop()
-            log.Fatalf("Erreur de lecture : %v", err)
+            log.Fatalf("Read error: %v", err)
         }
 
-        // Convertir en HTML
+        // Convert to HTML
         html, err := converter.ConvertMarkdownToHTML(markdown)
         if err != nil {
             s.Stop()
-            log.Fatalf("Erreur de conversion : %v", err)
+            log.Fatalf("Conversion error: %v", err)
         }
 
-        // Arrêt du loader après conversion
+        // Stop the spinner after conversion
         s.Stop()
 
         if outputFile == "" {
-            fmt.Println("Entrez le chemin du fichier HTML")
+            fmt.Println("Enter the path to the HTML file:")
             fmt.Scanln(&outputFile)
         }
 
-		// Vérifier l'extension du fichier
+        // Check file extension
         if filepath.Ext(outputFile) != ".html" {
-            log.Fatal("Erreur: Le fichier de sortie doit avoir l'extension .html")
+            log.Fatal("Error: Output file must have a .html extension")
         }
 
         if outputFile != "" {
             if err := utils.WriteFile(outputFile, []byte(html)); err != nil {
-                log.Fatalf("Erreur d'écriture : %v", err)
+                log.Fatalf("Write error: %v", err)
             }
-            fmt.Printf("Conversion réussie ! HTML enregistré dans %s\n", outputFile)
+            fmt.Printf("Conversion successful! HTML saved to %s %s\n", outputFile, utils.Signature)
         } else {
-            fmt.Println("\nRésultat de la conversion :")
+            fmt.Println("\nConversion result:")
             fmt.Println("-------------------------------")
             fmt.Println(html)
         }

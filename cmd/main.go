@@ -5,7 +5,7 @@ import (
     "fmt"
     "os"
     "strings"
-	"os/signal"
+    "os/signal"
     "syscall"
     "github.com/spf13/cobra"
     "github.com/tonuser/markdown-to-html/internal/utils"
@@ -78,7 +78,16 @@ func startREPL() {
 
 // Lance l'application et active le mode interactif
 func Execute() error {
-    fmt.Println(formatLongDescription()) // Affiche la description au début
+
+	//Verifie si l'argument --help est present
+	for _, arg := range os.Args {
+		if arg == "--help" || arg == "-h" {
+			return RootCmd.Execute()
+		}
+	}
+
+	//Affiche la description 
+	fmt.Println(formatLongDescription())
     if len(os.Args) > 1 {
         if err := RootCmd.Execute(); err != nil {
             fmt.Println(utils.ErrorStyle.Sprint("Erreur d'exécution de la commande : "), err)

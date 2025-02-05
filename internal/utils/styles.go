@@ -9,6 +9,8 @@ var (
 	InputFile string
 )
 
+var Signature = "\n✨ Ano2225 ❤️ - Creator of H2M ✨\n"
+
 //Constantes pour le style
 const Logo = `
 
