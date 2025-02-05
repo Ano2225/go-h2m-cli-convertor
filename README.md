@@ -1,20 +1,20 @@
 # 🚀 H2M - Markdown ↔ HTML Converter  
 
 ## 📌 Description  
-H2M est un outil en ligne de commande (CLI) permettant de convertir des fichiers :  
+H2M is a command-line tool (CLI) for converting files:  
 ✅ **Markdown (.md) → HTML (.html)**  
 ✅ **HTML (.html) → Markdown (.md)**  
 
-Il est conçu pour être rapide, simple et efficace.  
+Fast, simple, and efficient.  
 
 ---
 
 ## 📥 Installation  
-### 🔧 Prérequis  
-- Go installé (`>= 1.18`)  
+### 🔧 Requirements  
+- Go installed (`>= 1.18`)  
 
-### 📌 Étapes  
-Clone le dépôt et build le projet :  
+### 📌 Steps  
+Clone the repository and build the project:  
 ```sh
 git clone https://github.com/Ano2225/go-h2m-cli-convertor
 cd go-h2m-cli-convertor
@@ -22,49 +22,53 @@ go build -o h2m
 ```
 ---
 
-## 🚀 Utilisation  
+## 🚀 Usage  
 
-### 🔹 Conversion Markdown → HTML  
+### 🔹 Convert Markdown → HTML  
 ```sh
-./h2m md2html -i document.md -o resultat.html
+./h2m md2html -i document.md -o result.html
 ```
 
-### 🔹 Conversion HTML → Markdown  
+### 🔹 Convert HTML → Markdown  
 ```sh
-./h2m html2md -i page.html -o resultat.md
+./h2m html2md -i page.html -o result.md
 ```
 
-### 🔹 Mode interactif  
-Lance l'outil sans argument pour entrer dans le mode interactif :  
+### 🔹 Interactive Mode  
+Run the tool without arguments to enter interactive mode:  
 ```sh
 ./h2m
 ```
-Tape `exit` ou utilise `Ctrl+C` pour quitter.  
+Type `exit` or press `Ctrl+C` to quit.  
 
 ---
 
-## ⚡ Exemples  
-#### 📄 Fichier `sample.md` :  
+### Help
+```sh
+./h2m --help 
+```
+
+## ⚡ Example  
+#### 📄 `sample.md` file:  
 ```md
 # Hello World
 This is a **Markdown** file.
 ```
-#### 🔄 Conversion :  
+#### 🔄 Convert:  
 ```sh
 ./h2m -i sample.md -o sample.html
 ```
-#### 📄 Résultat `sample.html` :  
+#### 📄 Output `sample.html`:  
 ```html
 <h1>Hello World</h1>
 <p>This is a <strong>Markdown</strong> file.</p>
 ```
 ---
 
-## 🤝 Contribution
-Forke, modifie, et envoie une Pull Request !
+## 🤝 Contributing  
+Fork, modify, and submit a pull request!  
 
-
-## 🛠️ Mainteneur  
+## 🛠️ Maintainer  
 👤 **Arouna Ouattara**  
 🔗 [LinkedIn](https://www.linkedin.com/in/arouna-ouattara/)  
 
