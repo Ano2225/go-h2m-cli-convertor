@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"path/filepath"
 	"time"
-
 	"github.com/briandowns/spinner"
 	"github.com/spf13/cobra"
 	"github.com/tonuser/markdown-to-html/internal/converter"
@@ -25,9 +25,17 @@ var htmlToMdCmd = &cobra.Command{
 			fmt.Println("Entrez le chemin du fichier HTML")
 			fmt.Scanln(&inputFile)
 		}
+		 
+		
 		if inputFile == "" {
 			log.Fatal("Erreur: Aucun fichier HTML fourni")
 		}
+
+		  // Vérifier l'extension du fichier
+		  if filepath.Ext(inputFile) != ".html" {
+            log.Fatal("Erreur: Le fichier d'entrée doit avoir l'extension .html")
+        }
+
 
 		//Démarrage du loader
 		s := spinner.New(spinner.CharSets[14], 100*time.Millisecond)
@@ -52,9 +60,14 @@ var htmlToMdCmd = &cobra.Command{
 		s.Stop()
 
 		if outputFile == "" {
-			fmt.Println("Entrez le chemin du fichier Markdown (ou laisser vide pour afficher dans la console)")
+			fmt.Println("Entrez le chemin du fichier Markdown")
 			fmt.Scanln(&outputFile)
 		}
+
+		  // Vérifier l'extension du fichier
+		  if filepath.Ext(outputFile) != ".md" {
+            log.Fatal("Erreur: Le fichier de sortie doit avoir l'extension .md")
+        }
 
 		if outputFile != "" {
 			if err := utils.WriteFile(outputFile, []byte(markdown)); err != nil {

@@ -5,28 +5,21 @@ Un outil CLI permettant de convertir du **Markdown** en **HTML** et inversement.
 
 ## 🚀 Installation
 
-### 1️⃣ Cloner le projet
+### 1️ Cloner le projet
 ```sh
-git clone https://github.com/tonuser/go-markdown-to-html-cli.git
-cd go-markdown-to-html-cli
+git clone
 ```
-
-### 2️⃣ Installer les dépendances
-```sh
-go mod tidy
-```
-
-### 3️⃣ Compiler le programme
+### 2 Compiler le programme
 ```sh
 go build -o h2m
 ```
 > Sur Windows, l'exécutable sera `h2m.exe`
 
+
 ## 🛠️ Utilisation
 
 ### 🔹 Afficher l'aide générale
 ```sh
-./h2m --help   # Linux/macOS
 h2m.exe --help # Windows
 ```
 
@@ -41,11 +34,6 @@ h2m.exe --help # Windows
 ./h2m md2html --input fichier.md --output fichier.html
 ```
 
-### 🔹 Tester le programme sans fichier de sortie
-Si tu ne spécifies pas `--output`, le résultat s'affichera dans la console :
-```sh
-./h2m html2md --input fichier.html
-```
 
 ## 🔍 Exemple de Test
 Crée un fichier `test.md` avec ce contenu :

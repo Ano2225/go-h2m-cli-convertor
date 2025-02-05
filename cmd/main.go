@@ -5,6 +5,8 @@ import (
     "fmt"
     "os"
     "strings"
+	"os/signal"
+    "syscall"
     "github.com/spf13/cobra"
     "github.com/tonuser/markdown-to-html/internal/utils"
 )
@@ -39,9 +41,24 @@ func startREPL() {
     reader := bufio.NewReader(os.Stdin)
     fmt.Println("\nEntrez une commande (ou tapez 'exit' pour quitter) :")
 
+    // Création d'un channel pour écouter les signaux OS
+    sigs := make(chan os.Signal, 1)
+    signal.Notify(sigs, os.Interrupt, syscall.SIGTERM)
+
+    // Goroutine pour écouter les signaux
+    go func() {
+        <-sigs
+        fmt.Println("\nFermeture de H2M...")
+        os.Exit(0) // Quitte proprement
+    }()
+
     for {
         fmt.Print(utils.TitleStyle.Sprint("H2M> "))
-        input, _ := reader.ReadString('\n')
+        input, err := reader.ReadString('\n')
+        if err != nil {
+            fmt.Println(utils.ErrorStyle.Sprint("Erreur de lecture de l'entrée : "), err)
+            continue
+        }
         input = strings.TrimSpace(input)
 
         if input == "exit" {
@@ -54,21 +71,24 @@ func startREPL() {
         RootCmd.SetArgs(args)
 
         if err := RootCmd.Execute(); err != nil {
-            fmt.Printf("Erreur: %v\n", err)
+            fmt.Println(utils.ErrorStyle.Sprint("Erreur d'exécution de la commande : "), err)
         }
     }
 }
 
-// Execute lance l'application et active le mode interactif
+// Lance l'application et active le mode interactif
 func Execute() error {
     fmt.Println(formatLongDescription()) // Affiche la description au début
     if len(os.Args) > 1 {
-        return RootCmd.Execute()
+        if err := RootCmd.Execute(); err != nil {
+            fmt.Println(utils.ErrorStyle.Sprint("Erreur d'exécution de la commande : "), err)
+            return err
+        }
     } else {
         // Activer le mode interactif si aucune commande n'est donnée
         startREPL()
-        return nil
     }
+    return nil
 }
 
 // initialise toutes les commandes et leur style
