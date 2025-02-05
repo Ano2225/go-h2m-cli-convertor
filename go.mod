@@ -6,6 +6,7 @@ require (
 	github.com/JohannesKaufmann/html-to-markdown v1.6.0 // indirect
 	github.com/PuerkitoBio/goquery v1.9.2 // indirect
 	github.com/andybalholm/cascadia v1.3.2 // indirect
+	github.com/briandowns/spinner v1.23.2 // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jaytaylor/html2text v0.0.0-20230321000545-74c2419ad056 // indirect
@@ -19,4 +20,5 @@ require (
 	github.com/yuin/goldmark v1.7.8 // indirect
 	golang.org/x/net v0.34.0 // indirect
 	golang.org/x/sys v0.29.0 // indirect
+	golang.org/x/term v0.28.0 // indirect
 )

@@ -3,10 +3,12 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"time"
+
+	"github.com/briandowns/spinner"
 	"github.com/spf13/cobra"
 	"github.com/tonuser/markdown-to-html/internal/converter"
 	"github.com/tonuser/markdown-to-html/internal/utils"
-
 )
 
 // Commande html2md
@@ -14,7 +16,8 @@ var htmlToMdCmd = &cobra.Command{
 	Use:     "html2md",
 	Aliases: []string{"html-to-markdown"},
 	Short:   "Convertir HTML en Markdown",
-	Run: func(cmd *cobra.Command, args []string) {
+	Long:  "Convertir un fichier HTML en Markdown",
+	RunE: func(cmd *cobra.Command, args []string) error {
 		inputFile, _ := cmd.Flags().GetString("input")
 		outputFile, _ := cmd.Flags().GetString("output")
 
@@ -26,17 +29,27 @@ var htmlToMdCmd = &cobra.Command{
 			log.Fatal("Erreur: Aucun fichier HTML fourni")
 		}
 
+		//Démarrage du loader
+		s := spinner.New(spinner.CharSets[14], 100*time.Millisecond)
+		s.Start()
+		s.Suffix = " Conversion en cours..."
+
 		// Lire le fichier HTML
 		htmlContent, err := utils.ReadFile(inputFile)
 		if err != nil {
+			s.Stop()
 			log.Fatalf("Erreur de lecture : %v", err)
 		}
 
 		// Convertir en Markdown
 		markdown, err := converter.ConvertHTMLtoMarkdown(string(htmlContent))
 		if err != nil {
+			s.Stop()
 			log.Fatalf("Erreur de conversion : %v", err)
 		}
+
+		//Arret du loader après conversion
+		s.Stop()
 
 		if outputFile == "" {
 			fmt.Println("Entrez le chemin du fichier Markdown (ou laisser vide pour afficher dans la console)")
@@ -53,10 +66,8 @@ var htmlToMdCmd = &cobra.Command{
 			fmt.Println("------------------------------")
 			fmt.Println(markdown)
 		}
+		return nil
 	},
 }
 
-func init() {
-	htmlToMdCmd.Flags().StringP("input", "i", "", "Fichier HTML d'entrée")
-	htmlToMdCmd.Flags().StringP("output", "o", "", "Fichier Markdown de sortie")
-}
+

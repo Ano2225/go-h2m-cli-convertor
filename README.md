@@ -3,7 +3,12 @@
 ## 📌 Description  
 H2M is a simple CLI tool that converts:  
 ✅ **Markdown (.md) → HTML (.html)**  
-✅ **HTML (.html) → Markdown (.md)**  
+✅ **HTML (.html) → Markdown (.md)** 
+
+## Run the project
+
+- go run main.go html2md ()
+- go run main.go md2html ()
 
 
 ## 🤝 Contributing  
