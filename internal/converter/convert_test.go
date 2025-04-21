@@ -1,8 +1,9 @@
 package converter
 
 import (
-	//"log"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestConvertMarkdownToHTML(t *testing.T) {
@@ -10,14 +11,9 @@ func TestConvertMarkdownToHTML(t *testing.T) {
 	expected := "<h1>Titre</h1>\n"
 
 	html, err := ConvertMarkdownToHTML(markdown)
-	if err != nil {
-		t.Fatalf("Erreur de conversion : %v", err)
-	}
 
-	if html != expected {
-		t.Errorf("Resultat inattendu: attendu %q, obtenu %q", expected, html)
-	}
-
+	assert.NoError(t, err)
+	assert.Equal(t, expected, html)
 }
 
 func TestConvertHtmlToMarkdown(t *testing.T) {
@@ -25,12 +21,7 @@ func TestConvertHtmlToMarkdown(t *testing.T) {
 	expected := "# Titre"
 
 	markdown, err := ConvertHTMLtoMarkdown(htmlContent)
-	if err != nil {
-		t.Fatalf("Erreur de conversion : %v", err)
-	}
 
-	if markdown != expected {
-		t.Errorf("Resultat inattendu: attendu %q, obtenu %q", expected, markdown)
-	}
-
+	assert.NoError(t, err)
+	assert.Equal(t, expected, markdown)
 }

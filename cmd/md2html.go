@@ -1,15 +1,16 @@
 package cmd
 
 import (
-    "fmt"
-    "log"
-    "path/filepath"
-    "time"
+	"fmt"
+	"log"
+	"path/filepath"
+	"time"
 
-    "github.com/briandowns/spinner"
-    "github.com/spf13/cobra"
-    "github.com/tonuser/markdown-to-html/internal/converter"
-    "github.com/tonuser/markdown-to-html/internal/utils"
+	"github.com/briandowns/spinner"
+	"github.com/spf13/cobra"
+	"github.com/tonuser/markdown-to-html/internal/converter"
+	"github.com/tonuser/markdown-to-html/internal/utils"
+	"github.com/tonuser/markdown-to-html/internal/vars/constants"
 )
 
 // md2html Command
@@ -71,7 +72,7 @@ var mdToHtmlCmd = &cobra.Command{
             if err := utils.WriteFile(outputFile, []byte(html)); err != nil {
                 log.Fatalf("Write error: %v", err)
             }
-            fmt.Printf("Conversion successful! HTML saved to %s %s\n", outputFile, utils.Signature)
+            fmt.Printf("Conversion successful! HTML saved to %s %s\n", outputFile, constants.Signature)
         } else {
             fmt.Println("\nConversion result:")
             fmt.Println("-------------------------------")
