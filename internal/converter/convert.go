@@ -3,12 +3,11 @@ package converter
 import (
 	"bytes"
 	"strings"
-	//"github.com/jaytaylor/html2text"
 	"github.com/yuin/goldmark"
     "github.com/JohannesKaufmann/html-to-markdown"
 )
 
-//ConvertMarkdownToHTML
+//ConvertMarkdownToHTML converts Markdown to HTML
 func ConvertMarkdownToHTML(markdown []byte) (string, error) {
 	var buf bytes.Buffer
 	md := goldmark.New()
@@ -20,7 +19,7 @@ func ConvertMarkdownToHTML(markdown []byte) (string, error) {
 }
 
 
-//ConvertHtmltoMarkdown
+//ConvertHtmltoMarkdown converts HTML to Markdown
 func ConvertHTMLtoMarkdown(htmlContent string) (string, error) {
     // Créer un nouveau convertisseur
     converter := md.NewConverter("", true, nil)

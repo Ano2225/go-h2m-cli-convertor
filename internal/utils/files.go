@@ -4,12 +4,12 @@ import (
 	"os"
 )
 
-// ReadFile lit le contenu d'un fichier et le retourne sous forme de bytes
+// ReadFile read a file and returns its content
 func ReadFile(filePath string) ([]byte, error) {
 	return os.ReadFile(filePath)
 }
 
-//WriteFile ecrit du contenu dans un fichier
+//WriteFile write a file with the given content
 func WriteFile(filePath string, content []byte) error {
 	return os.WriteFile(filePath, content, 0644)
 }
