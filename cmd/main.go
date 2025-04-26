@@ -123,6 +123,9 @@ func setupCommands() {
 	// Configuration
 	addGlobalFlags()
 	addConversionCommands()
+
+	// Useful commands 
+	utilsFunctions()
 }
 
 func init() {
@@ -143,4 +146,8 @@ func addGlobalFlags() {
 func addConversionCommands() {
 	RootCmd.AddCommand(mdToHtmlCmd)
 	RootCmd.AddCommand(htmlToMdCmd)
+}
+//function to add useful commands to the root command
+func utilsFunctions() {
+	RootCmd.AddCommand(clearCmd)
 }
